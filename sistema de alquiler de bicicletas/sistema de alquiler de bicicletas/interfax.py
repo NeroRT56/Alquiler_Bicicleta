@@ -60,7 +60,7 @@ class MainWindowSistemaBicicleta(QMainWindow):
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec()
             return  
-        question =  question =QMessageBox.question(self,"Eliminar","¿Deseas eliminar el usuario ?{}".format(usuario.user.name),QMessageBox.Yes | QMessageBox.No)
+        question =  question =QMessageBox.question(self,"Eliminar","¿Deseas eliminar el usuario {} ?".format(usuario.user.name),QMessageBox.Yes | QMessageBox.No)
         if question == QMessageBox.Yes:
             self.runin.eliminar_usuario(usuario.user)            
             self.__cargar_datos_usuario()
@@ -76,7 +76,7 @@ class MainWindowSistemaBicicleta(QMainWindow):
             msg_box.exec()
             return
         else:
-            question = question = QMessageBox.question(self,"Eliminar","¿Deseas eliminar la bicicleta ? {}?".format(bicicleta.bicis.name) , QMessageBox.Yes | QMessageBox.No)
+            question = question = QMessageBox.question(self,"Eliminar","¿Deseas eliminar la bicicleta  {} ?".format(bicicleta.bicis.name) , QMessageBox.Yes | QMessageBox.No)
         if question == QMessageBox.Yes:
             self.runin.eliminar_bicicleta(bicicleta.bicis)           
             self.__cargar_datos_bicicletas()
@@ -84,7 +84,7 @@ class MainWindowSistemaBicicleta(QMainWindow):
     def obtenerRentaBicicletas(self):
         usuario_selec = self.usuario_seleccionado
         bicicleta_selec = self.bicicleta_seleccionada 
-        end_date = datetime.strptime("2999-10-10 0:0:0" , "%Y-%m-%d %H:%M:%S")
+        end_date = datetime.now()
         if usuario_selec is not None and bicicleta_selec is not None:
             start_date = datetime.now()
             start_date = datetime.strptime(str(start_date).split(".")[0], "%Y-%m-%d %H:%M:%S")
@@ -120,8 +120,12 @@ class MainWindowSistemaBicicleta(QMainWindow):
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec()
         else:
-            dialogo = QMessageBox.information(
-            self, "Ventana de pago", "su valor a pagar es 10.000")
+
+            #dialogo = QMessageBox.information(
+            #self, "Ventana de pago", "su valor a pagar es 10.000")
+            fecha_final = datetime.now() 
+            devel_cicle =self.runin.return_bike(selec_rent.rent.id_rental,fecha_final)
+            self.lineEdit.setText(str(devel_cicle.price))
             
     def __cargar_datos_usuario(self):
         usuarios = self.runin.users
